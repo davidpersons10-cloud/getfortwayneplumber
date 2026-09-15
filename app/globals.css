@@ -1,0 +1,181 @@
+@import "./fw-plumber.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--fw-text);
+  background: #fff;
+  line-height: 1.55;
+  padding-bottom: 4.5rem; /* room for sticky mobile CTA */
+}
+
+a {
+  color: var(--fw-blue);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.fw-wrap {
+  max-width: var(--fw-max);
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2.5rem;
+}
+
+.fw-site-header {
+  background: #fff;
+  border-bottom: 1px solid var(--fw-border);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.fw-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.fw-logo {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--fw-blue);
+  text-decoration: none !important;
+  line-height: 1.2;
+}
+
+.fw-logo span {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--fw-muted);
+}
+
+.fw-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  align-items: center;
+}
+
+.fw-nav a {
+  text-decoration: none;
+  color: var(--fw-text);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.fw-nav a:hover,
+.fw-nav a[aria-current="page"] {
+  color: var(--fw-blue);
+  text-decoration: underline;
+}
+
+.fw-header-call {
+  white-space: nowrap;
+}
+
+.fw-page h1 {
+  color: var(--fw-blue);
+  font-size: 1.75rem;
+  line-height: 1.25;
+  margin-top: 0;
+}
+
+.fw-page h2 {
+  color: var(--fw-blue);
+  font-size: 1.25rem;
+}
+
+.fw-legal h2 {
+  margin-top: 1.75rem;
+}
+
+.fw-legal p,
+.fw-legal li {
+  color: var(--fw-text);
+}
+
+.fw-sticky-call {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  padding: 0.65rem 0.85rem;
+  background: #1a2332;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.fw-sticky-call .fw-btn {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .fw-sticky-call {
+    display: block;
+  }
+
+  .fw-header-call {
+    display: none;
+  }
+
+  .fw-nav {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 601px) {
+  body {
+    padding-bottom: 0;
+  }
+}
+
+.fw-breadcrumb {
+  font-size: 0.875rem;
+  color: var(--fw-muted);
+  margin-bottom: 1rem;
+}
+
+.fw-breadcrumb a {
+  color: var(--fw-blue);
+}
+
+.fw-skip {
+  position: absolute;
+  left: -9999px;
+}
+
+.fw-skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  background: #fff;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--fw-blue);
+}
