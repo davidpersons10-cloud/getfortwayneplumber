@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://getfortwayneplumber.com/sitemap.xml
+Sitemap: https://davidpersons10-cloud.github.io/getfortwayneplumber/sitemap.xml

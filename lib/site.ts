@@ -5,7 +5,7 @@ export const SITE = {
   name: "Get Fort Wayne Plumber",
   altName: "Fort Wayne Plumbing Pros",
   domain: "getfortwayneplumber.com",
-  url: "https://getfortwayneplumber.com",
+  url: "https://davidpersons10-cloud.github.io/getfortwayneplumber",
   phone: TRACKING_NUMBER_PLACEHOLDER,
   phoneTel: `tel:${TRACKING_NUMBER_PLACEHOLDER}`,
   email: "leads@getfortwayneplumber.com",
