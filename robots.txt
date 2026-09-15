@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://davidpersons10-cloud.github.io/getfortwayneplumber/sitemap.xml
