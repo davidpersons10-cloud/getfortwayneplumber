@@ -62,8 +62,9 @@ $mu2=$root.'/wp-content/mu-plugins/ong-join-end-user-label-2026-09-22.php';
 $b=ong_fetch($cdn.'ong-join-end-user-label-2026-09-22.php');
 if($b===false){ $out['steps'][]='eu-mu FAIL fetch'; }
 else {
-  if(substr_count($b,'<?php')!==1){ $out['steps'][]='eu-mu REJECT opens'; }
-  else { ong_put($mu2,$b); $out['steps'][]='eu-mu OK '.strlen($b); }
+  $opens=substr_count($b,'<?php');
+  if($opens!==1 || strpos($b,'End User')===false){ $out['steps'][]="eu-mu REJECT opens=$opens"; }
+  else { ong_put($mu2,$b); $out['steps'][]='eu-mu OK '.strlen($b).' opens='.$opens; }
 }
 
 // 5) Calculator plugin files (shortcode + main + dist + rates)
@@ -117,18 +118,57 @@ foreach(['ong-home-v3b/ong-home-v3b.php','ong-kc-hub/ong-kc-hub.php','ong-career
   }
 }
 
-// Put shortcode on calculator pages if missing
-foreach(['tools/calculator','tools/tools-calculator','calculator','modular-calculator'] as $slug){
+// Put shortcode on calculator pages if missing; create /tools/calculator child if needed
+$targets=[];
+foreach(['tools/tools-calculator','tools/calculator','calculator','modular-calculator'] as $slug){
   $page=get_page_by_path($slug);
-  if(!$page){ $out['pages'][$slug]='missing'; continue; }
-  $c=(string)$page->post_content;
-  $out['pages'][$slug]=['id'=>$page->ID,'has_shortcode'=>str_contains($c,'modular_cost_calculator'),'len'=>strlen($c)];
-  if(!str_contains($c,'modular_cost_calculator')){
-    $new = trim($c)==='' ? '[modular_cost_calculator]' : ($c."\n\n[modular_cost_calculator]");
-    wp_update_post(['ID'=>$page->ID,'post_content'=>$new]);
-    $out['pages'][$slug]['updated']=true;
-  }
+  if($page) $targets[$slug]=$page;
+  else $out['pages'][$slug]='missing';
 }
+// Find by title
+$q=new WP_Query(['post_type'=>'page','post_status'=>'publish','s'=>'Modular Calculator','posts_per_page'=>10]);
+foreach($q->posts as $pg){
+  $targets['title:'.$pg->post_name]=$pg;
+}
+wp_reset_postdata();
+// Ensure tools parent + calculator child exist for /tools/calculator/
+$tools=get_page_by_path('tools');
+if(!$tools){
+  $tools_id=wp_insert_post(['post_title'=>'Tools','post_name'=>'tools','post_status'=>'publish','post_type'=>'page','post_content'=>'']);
+  $tools=get_post($tools_id);
+  $out['pages']['tools_created']=$tools_id;
+}
+$calc=get_page_by_path('tools/calculator');
+if(!$calc && $tools){
+  $calc_id=wp_insert_post([
+    'post_title'=>'Modular Calculator',
+    'post_name'=>'calculator',
+    'post_status'=>'publish',
+    'post_type'=>'page',
+    'post_parent'=>(int)$tools->ID,
+    'post_content'=>'[modular_cost_calculator]',
+  ]);
+  $calc=get_post($calc_id);
+  $out['pages']['tools/calculator_created']=$calc_id;
+  if($calc) $targets['tools/calculator']=$calc;
+}
+foreach($targets as $slug=>$page){
+  $c=(string)$page->post_content;
+  $row=['id'=>$page->ID,'has_shortcode'=>str_contains($c,'modular_cost_calculator'),'len'=>strlen($c),'status'=>$page->post_status];
+  if(!str_contains($c,'modular_cost_calculator')){
+    $new = (trim($c)==='' || strlen(trim(wp_strip_all_tags($c)))<8) ? '[modular_cost_calculator]' : ($c."\n\n[modular_cost_calculator]");
+    wp_update_post(['ID'=>$page->ID,'post_content'=>$new]);
+    $row['updated']=true;
+    $row['has_shortcode']=true;
+  }
+  // If Elementor empty shell, prefer plain shortcode content
+  if(str_contains($c,'elementor') && !str_contains($c,'modular_cost_calculator')){
+    wp_update_post(['ID'=>$page->ID,'post_content'=>'[modular_cost_calculator]']);
+    $row['forced_shortcode']=true;
+  }
+  $out['pages'][$slug]=$row;
+}
+if(function_exists('flush_rewrite_rules')) flush_rewrite_rules(false);
 
 // Soft redirect: if /tools/calculator has title-only Elementor empty, still has shortcode now.
 if(function_exists('do_action')){
