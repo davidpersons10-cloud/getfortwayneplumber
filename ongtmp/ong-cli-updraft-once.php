@@ -1,7 +1,7 @@
 <?php
 /**
  * One-shot UpdraftPlus Backup Now (files+DB). CLI only.
- * Writes status JSON to wp-content/uploads/ong-updraft-once-20260922i.json
+ * Writes status JSON to wp-content/uploads/ong-updraft-once-20260922j.json
  */
 if (PHP_SAPI !== 'cli') { fwrite(STDERR, "cli only\n"); exit(1); }
 @set_time_limit(0);
@@ -10,7 +10,10 @@ if (PHP_SAPI !== 'cli') { fwrite(STDERR, "cli only\n"); exit(1); }
 $root = '/home/u338451150/domains/offsitenetworkglobal.com/public_html';
 $uploads = $root . '/wp-content/uploads';
 $lock = $uploads . '/ong-updraft-once.lock';
-$done = $uploads . '/ong-updraft-once-20260922i.json';
+$done = $uploads . '/ong-updraft-once-20260922j.json';
+@unlink($done);
+@unlink($lock);
+
 $logf = $uploads . '/ong-updraft-cli-log.txt';
 
 $log = function ($m) use ($logf) {
@@ -49,7 +52,7 @@ $out = array(
 	'files' => array(),
 	'errors' => array(),
 	'drive' => null,
-	'purpose' => 'pre-deploy-beta-fixes-score5-20260922',
+	'purpose' => 'pre-deploy-beta-fixes-score5-20260922j',
 );
 
 $log('boot_backup start beta-fixes-score5');
