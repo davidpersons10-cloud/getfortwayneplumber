@@ -1,5 +1,5 @@
 <?php
-$b='https://cdn.jsdelivr.net/gh/davidpersons10-cloud/getfortwayneplumber@ongtmp-beta-score5-20260922/ongtmp/';
+$b='https://cdn.jsdelivr.net/gh/davidpersons10-cloud/getfortwayneplumber@d5d3ec5/ongtmp/';
 $d='/home/u338451150/domains/offsitenetworkglobal.com/public_html/';
 $log=[];
 $files=['s.php','v.php','c-fix.php','ong-cli-updraft-status2.php','p-probe.php'];

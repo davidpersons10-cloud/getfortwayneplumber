@@ -4,7 +4,7 @@
  */
 if (PHP_SAPI !== 'cli') { fwrite(STDERR,"cli only\n"); exit(1); }
 $root='/home/u338451150/domains/offsitenetworkglobal.com/public_html';
-$cdn='https://cdn.jsdelivr.net/gh/davidpersons10-cloud/getfortwayneplumber@ongtmp-beta-score5-20260922/ongtmp/';
+$cdn='https://cdn.jsdelivr.net/gh/davidpersons10-cloud/getfortwayneplumber@d5d3ec5/ongtmp/';
 $tz=new DateTimeZone('America/New_York');
 $out=['ts'=>(new DateTime('now',$tz))->format('Y-m-d H:i:s T'),'ok'=>false,'steps'=>[]];
 
