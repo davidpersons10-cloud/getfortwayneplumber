@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ONG Join End User label fix
  * Description: Ensures Join pricing shows a clear End User heading before the $250 tier (beta C-02). Server-side shortcode filter + light CSS/JS.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: ONG
  */
 if ( ! defined( 'ABSPATH' ) ) {
@@ -38,7 +38,7 @@ add_filter(
 			if ( stripos( $output, 'ong-eu-lead' ) === false ) {
 				$output = preg_replace(
 					'/(<article[^>]*data-sku=["\']member_eu["\'][^>]*>\s*<h3[^>]*>.*?<\/h3>)/is',
-					'$1<p class="ong-eu-lead" style="margin:0 0 .35rem;color:#c9a227;font-weight:700;letter-spacing:.02em;text-transform:uppercase;font-size:.72rem">End User · $250 /yr</p>',
+					'$1<p class="ong-eu-lead" style="margin:0 0 .35rem;color:#c9a227;font-weight:700;letter-spacing:.02em;text-transform:uppercase;font-size:.72rem">End User · demand side · \$250/yr</p>',
 					$output,
 					1
 				);
