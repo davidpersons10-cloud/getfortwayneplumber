@@ -1,7 +1,7 @@
 <?php
 if (PHP_SAPI !== 'cli') exit(1);
 $r='/home/u338451150/domains/offsitenetworkglobal.com/public_html';
-$f=$r.'/wp-content/uploads/ong-updraft-once-20260922h.json';
+$f=$r.'/wp-content/uploads/ong-updraft-once-20260922i.json';
 $l=$r.'/wp-content/uploads/ong-updraft-cli-log.txt';
 $lock=$r.'/wp-content/uploads/ong-updraft-once.lock';
 $out=['exists'=>file_exists($f),'lock'=>file_exists($lock),'log_tail'=>null,'json'=>null];
