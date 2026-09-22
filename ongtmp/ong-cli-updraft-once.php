@@ -1,7 +1,7 @@
 <?php
 /**
  * One-shot UpdraftPlus Backup Now (files+DB). CLI only.
- * Writes status JSON to wp-content/uploads/ong-updraft-once-20260922h.json
+ * Writes status JSON to wp-content/uploads/ong-updraft-once-20260922i.json
  */
 if (PHP_SAPI !== 'cli') { fwrite(STDERR, "cli only\n"); exit(1); }
 @set_time_limit(0);
@@ -10,7 +10,7 @@ if (PHP_SAPI !== 'cli') { fwrite(STDERR, "cli only\n"); exit(1); }
 $root = '/home/u338451150/domains/offsitenetworkglobal.com/public_html';
 $uploads = $root . '/wp-content/uploads';
 $lock = $uploads . '/ong-updraft-once.lock';
-$done = $uploads . '/ong-updraft-once-20260922h.json';
+$done = $uploads . '/ong-updraft-once-20260922i.json';
 $logf = $uploads . '/ong-updraft-cli-log.txt';
 
 $log = function ($m) use ($logf) {
