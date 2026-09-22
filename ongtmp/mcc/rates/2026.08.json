@@ -1,0 +1,485 @@
+{
+  "version": "2026.08",
+  "effectiveDate": "2026-08-01",
+  "currency": "USD",
+  "geography": "United States planning allowances",
+  "estimateUse": "concept-stage modular feasibility",
+  "band": {
+    "low": 0.9,
+    "high": 1.1
+  },
+  "review": {
+    "status": "pending-qualified-estimator-review",
+    "reviewer": null,
+    "reviewDate": null
+  },
+  "sourceNotes": [
+    "Calibrated allowances supplied in project narrative; not a manufacturer quote.",
+    "CCI values are PLANNING ALLOWANCES, not RSMeans City Cost Index publications. Florida is set to 102 so the 2,000 sf worked example traces. Disclose this in the UI.",
+    "Factory-region National / unspecified index is 1.00 so the fixture factory line is 2000 \u00d7 125 = 250000.",
+    "terrainCrane (Flat 1.00 / Sloped 1.12 / Difficult 1.25) is a planning fill-in. Do not apply CCI to crane day rates.",
+    "fieldFloorFactor (1s 1.00; 2\u20133 1.04; 4\u20135 1.08; 6\u20138 1.14) is a planning fill-in.",
+    "Complexity multipliers (Low 0.90 / Med 1.00 / High 1.15 / Very High 1.30) are planning fill-ins and do not apply to transport.",
+    "MEP matrix interpolations (documented, not silent): Townhome/Central 36, Townhome/VRF 42; Multifamily/Split 32; Hospitality/Split 44.",
+    "standingSeamPremium multiplies the roof line by 1.12 when true.",
+    "Factory/field shares per line are explanatory planning fill-ins that sum to 1.00. Volumetric manufacturing is 100% factory; transport/crane/set-stitch are 100% field; roof/siding shares are field-weighted close-up allowances; MEP uses the specified field share (0.25 volumetric / 0.45 panelized).",
+    "Fill-ins listed here are planning fill-ins pending qualified modular estimator review.",
+    "CCI concept follows an RSMeans-style localization pattern but these figures are not published RSMeans values.",
+    "factoryCostReduction 0.80 is applied once after the factory matrix and factors. Do not also bake a 20% cut into factoryPsf.",
+    "Live transport is 0.05% of the reduced factory line (factory \u00d7 transportPctOfFactory 0.0005). The historic per-module distance formula is informational only (module count and haul still display).",
+    "Product band is \u221210% / +10% (point \u00d7 0.90 / \u00d7 1.10). Actual uncertainty may be wider.",
+    "Traditional stick-built comparison (planning allowance): stickPsf is the reduced modular factory+field stack (factory + set/stitch + roof + siding + MEP + sprinkler) \u00d7 stickPremium (~35\u201355% above that stack) plus stickExtrasPsf site-built extras, then the same user contingency. Transport and crane stay on the modular side only. stick.point is never added into includedTotal. If a scenario would violate stick.point > modular.point, clamp stick.point to modular.point \u00d7 stickClampRatio (1.08) and recompute the \u00b110% band so the invariant always holds.",
+    "Stick-built schedule is a longer sequential on-site span than the modular on-site window. Modular factory weeks can overlap site/foundation work; foundations remain excluded from cost."
+  ],
+  "constants": {
+    "sfPerM2": 10.7639,
+    "areaMinSf": 400,
+    "areaMaxSf": 500000,
+    "floorsMin": 1,
+    "floorsMax": 8,
+    "haulMin": 25,
+    "haulMax": 2500,
+    "contingencyMin": 0,
+    "contingencyMax": 25,
+    "moduleSfVolumetric": 400,
+    "moduleSfPanelization": 320,
+    "hospitalityKeySf": 350,
+    "standingSeamRoofMultiplier": 1.12,
+    "mepFieldShareVolumetric": 0.25,
+    "mepFieldSharePanelization": 0.45,
+    "oversizeAdderPerModule": 1200,
+    "urbanAdderPerModule": 900,
+    "transportBasePerModule": 4500,
+    "transportMidThresholdMiles": 250,
+    "transportLongThresholdMiles": 800,
+    "transportMidPerMile": 12,
+    "transportLongPerMile": 18,
+    "cranePicksHard": 3,
+    "cranePicksLimited": 5,
+    "cranePicksStandard": 8,
+    "craneRateSmall": 8500,
+    "craneRateMid": 12500,
+    "craneRateLarge": 22000,
+    "mixTargetVolumetricFactory": 0.6,
+    "mixTargetPanelizedFactory": 0.4,
+    "mixWarnDeltaPts": 10,
+    "transportShareWarnPct": 15,
+    "panelizedToggleWarnPct": 30,
+    "manualModuleWarnPct": 25,
+    "kmPerMile": 1.60934
+  },
+  "factoryPsf": {
+    "Single-family": {
+      "Economy": 95,
+      "Standard": 125,
+      "Premium": 170,
+      "Luxury": 230
+    },
+    "Townhome": {
+      "Economy": 90,
+      "Standard": 118,
+      "Premium": 158,
+      "Luxury": 210
+    },
+    "Multifamily": {
+      "Economy": 85,
+      "Standard": 112,
+      "Premium": 150,
+      "Luxury": 195
+    },
+    "Hospitality": {
+      "Economy": 105,
+      "Standard": 140,
+      "Premium": 190,
+      "Luxury": 255
+    }
+  },
+  "systemFactory": {
+    "Volumetric": 1.0,
+    "Panelization": 0.78
+  },
+  "structureFactory": {
+    "Wood frame": 1.0,
+    "Light-gauge steel": 1.08
+  },
+  "factoryFloorFactor": {
+    "1": 1.0,
+    "2-3": 1.03,
+    "4-5": 1.06,
+    "6-8": 1.1
+  },
+  "factoryRegionIndex": {
+    "National": 1.0,
+    "Southeast": 0.94,
+    "Midwest": 0.96,
+    "Mid-Atlantic": 1.02,
+    "West": 1.1
+  },
+  "localeFactory": {
+    "Rural": 1.0,
+    "Suburban": 1.0,
+    "Urban": 1.02
+  },
+  "accessTransport": {
+    "Good": 1.0,
+    "Limited": 1.18,
+    "Difficult": 1.4
+  },
+  "terrainCrane": {
+    "Flat": 1.0,
+    "Sloped": 1.12,
+    "Difficult": 1.25
+  },
+  "setStitchPsf": {
+    "Volumetric": 18,
+    "Panelization": 38
+  },
+  "accessField": {
+    "Good": 1.0,
+    "Limited": 1.2,
+    "Difficult": 1.45
+  },
+  "terrainField": {
+    "Flat": 1.0,
+    "Sloped": 1.15,
+    "Difficult": 1.3
+  },
+  "seasonField": {
+    "Q1": 0.94,
+    "Q2": 1.0,
+    "Q3": 1.06,
+    "Q4": 0.96
+  },
+  "fieldFloorFactor": {
+    "1": 1.0,
+    "2-3": 1.04,
+    "4-5": 1.08,
+    "6-8": 1.14
+  },
+  "roofPsf": {
+    "Flat": 9,
+    "Pitched": 12,
+    "Gable": 13,
+    "Hip": 16
+  },
+  "roofSystem": {
+    "Volumetric": 1.0,
+    "Panelization": 1.35
+  },
+  "roofFinish": {
+    "Economy": 0.9,
+    "Standard": 1.0,
+    "Premium": 1.18,
+    "Luxury": 1.35
+  },
+  "sidingPsf": {
+    "Vinyl": 8,
+    "Cement board": 14,
+    "Stucco": 18,
+    "Hybrid": 16,
+    "Stone": 28
+  },
+  "sidingSystem": {
+    "Volumetric": 0.85,
+    "Panelization": 1.2
+  },
+  "envelopeQuality": {
+    "Economy": 0.85,
+    "Standard": 1.0,
+    "Premium": 1.2,
+    "Luxury": 1.45
+  },
+  "mepPsf": {
+    "Single-family": {
+      "Split": 28,
+      "Central": 34,
+      "VRF": 40
+    },
+    "Townhome": {
+      "Split": 30,
+      "Central": 36,
+      "VRF": 42
+    },
+    "Multifamily": {
+      "Split": 32,
+      "Central": 36,
+      "VRF": 42
+    },
+    "Hospitality": {
+      "Split": 44,
+      "Central": 48,
+      "VRF": 52
+    }
+  },
+  "mepPsfSource": {
+    "Single-family": {
+      "Split": "specified",
+      "Central": "specified",
+      "VRF": "specified"
+    },
+    "Townhome": {
+      "Split": "specified",
+      "Central": "interpolated",
+      "VRF": "interpolated"
+    },
+    "Multifamily": {
+      "Split": "interpolated",
+      "Central": "specified",
+      "VRF": "specified"
+    },
+    "Hospitality": {
+      "Split": "interpolated",
+      "Central": "specified",
+      "VRF": "specified"
+    }
+  },
+  "structureMep": {
+    "Wood frame": 1.0,
+    "Light-gauge steel": 1.06
+  },
+  "mepQuality": {
+    "Economy": 0.9,
+    "Standard": 1.0,
+    "Premium": 1.12,
+    "Luxury": 1.25
+  },
+  "mepSystem": {
+    "Volumetric": 1.0,
+    "Panelization": 1.08
+  },
+  "sprinklerPsf": {
+    "Light": 4.5,
+    "Ordinary": 6.25
+  },
+  "sprinklerSystem": {
+    "Volumetric": 0.9,
+    "Panelization": 1.05
+  },
+  "complexity": {
+    "Low": 0.9,
+    "Medium": 1.0,
+    "High": 1.15,
+    "Very High": 1.3
+  },
+  "sustainabilityFactory": {
+    "None": 1.0,
+    "ENERGY STAR": 1.03,
+    "LEED-ready": 1.08
+  },
+  "sustainabilityEnvelope": {
+    "None": 1.0,
+    "ENERGY STAR": 1.04,
+    "LEED-ready": 1.07
+  },
+  "lineShares": {
+    "Volumetric": {
+      "factory": {
+        "factoryShare": 1.0,
+        "fieldShare": 0.0
+      },
+      "transport": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "crane": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "setStitch": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "roof": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "siding": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "mep": {
+        "factoryShare": 0.75,
+        "fieldShare": 0.25
+      },
+      "sprinkler": {
+        "factoryShare": 0.7,
+        "fieldShare": 0.3
+      }
+    },
+    "Panelization": {
+      "factory": {
+        "factoryShare": 1.0,
+        "fieldShare": 0.0
+      },
+      "transport": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "crane": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "setStitch": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "roof": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "siding": {
+        "factoryShare": 0.0,
+        "fieldShare": 1.0
+      },
+      "mep": {
+        "factoryShare": 0.55,
+        "fieldShare": 0.45
+      },
+      "sprinkler": {
+        "factoryShare": 0.5,
+        "fieldShare": 0.5
+      }
+    }
+  },
+  "jobsiteCciByState": {
+    "AL": 88,
+    "AK": 118,
+    "AZ": 98,
+    "AR": 86,
+    "CA": 116,
+    "CO": 104,
+    "CT": 112,
+    "DE": 102,
+    "DC": 110,
+    "FL": 102,
+    "GA": 92,
+    "HI": 122,
+    "ID": 96,
+    "IL": 106,
+    "IN": 96,
+    "IA": 94,
+    "KS": 94,
+    "KY": 90,
+    "LA": 90,
+    "ME": 98,
+    "MD": 102,
+    "MA": 114,
+    "MI": 98,
+    "MN": 102,
+    "MS": 86,
+    "MO": 96,
+    "MT": 96,
+    "NE": 94,
+    "NV": 104,
+    "NH": 102,
+    "NJ": 114,
+    "NM": 92,
+    "NY": 118,
+    "NC": 90,
+    "ND": 94,
+    "OH": 98,
+    "OK": 90,
+    "OR": 108,
+    "PA": 104,
+    "RI": 110,
+    "SC": 90,
+    "SD": 92,
+    "TN": 92,
+    "TX": 94,
+    "UT": 96,
+    "VT": 98,
+    "VA": 96,
+    "WA": 108,
+    "WV": 94,
+    "WI": 100,
+    "WY": 94
+  },
+  "factoryWeeks": {
+    "Single-family": [
+      8,
+      14
+    ],
+    "Townhome": [
+      10,
+      16
+    ],
+    "Multifamily": [
+      12,
+      20
+    ],
+    "Hospitality": [
+      14,
+      22
+    ]
+  },
+  "transportDayBands": [
+    {
+      "maxMiles": 250,
+      "days": [
+        1,
+        2
+      ]
+    },
+    {
+      "maxMiles": 500,
+      "days": [
+        2,
+        3
+      ]
+    },
+    {
+      "maxMiles": 800,
+      "days": [
+        2,
+        4
+      ]
+    },
+    {
+      "maxMiles": 1200,
+      "days": [
+        3,
+        5
+      ]
+    },
+    {
+      "maxMiles": 2500,
+      "days": [
+        4,
+        5
+      ]
+    }
+  ],
+  "factoryCostReduction": 0.8,
+  "transportPctOfFactory": 0.0005,
+  "stickClampRatio": 1.08,
+  "stickPremium": {
+    "Single-family": 1.4,
+    "Townhome": 1.45,
+    "Multifamily": 1.5,
+    "Hospitality": 1.55
+  },
+  "stickExtrasPsf": {
+    "Single-family": 22,
+    "Townhome": 24,
+    "Multifamily": 28,
+    "Hospitality": 32
+  },
+  "stickOnsiteWeeks": {
+    "Single-family": [
+      20,
+      36
+    ],
+    "Townhome": [
+      24,
+      42
+    ],
+    "Multifamily": [
+      40,
+      78
+    ],
+    "Hospitality": [
+      48,
+      90
+    ]
+  }
+}
