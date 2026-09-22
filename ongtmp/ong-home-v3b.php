@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ONG Home Hub v3b
  * Description: Renders the approved ONG homepage mock v3b (photos throughout) via shortcode [ong_home_v3b]. Local assets only; no sticky mock nav.
- * Version: 1.0.6
+ * Version: 1.0.7
  * Author: Offsite Network Global
  * Text Domain: ong-home-v3b
  */
@@ -533,7 +533,7 @@ function ong_home_v3b_shortcode() {
 					<div class="tool-body">
 						<span class="chip-soon">Coming Soon</span>
 						<h3>iMod</h3>
-						<p>Next-gen modular planning tool. Placeholder chip for homepage — full hub on Tools.</p>
+						<p>Next-gen modular planning workspace for fabricators — open the Tools hub for the full iMod path.</p>
 						<a class="btn btn-sm btn-outline" href="<?php echo esc_url( home_url( '/tools/' ) ); ?>">Learn more</a>
 					</div>
 				</div>

@@ -8,6 +8,8 @@ $eu=f($base.'ong-join-end-user-label-2026-09-22.php');
 if($eu && substr_count($eu,'<?php')===1){ file_put_contents($root.'/wp-content/mu-plugins/ong-join-end-user-label-2026-09-22.php',$eu); $log[]='eu '.strlen($eu);} else $log[]='eu FAIL';
 $c=f($base.'ong-careers-empty-fix-2026-09-21.php');
 if($c && substr_count($c,'<?php')===1){ file_put_contents($root.'/wp-content/mu-plugins/ong-careers-empty-fix-2026-09-21.php',$c); $log[]='careers '.strlen($c);} else $log[]='careers FAIL';
+$h=f($base.'ong-home-v3b.php');
+if($h && strpos($h,'Version: 1.0.7')!==false && strpos($h,'Placeholder chip')===false){ file_put_contents($root.'/wp-content/plugins/ong-home-v3b/ong-home-v3b.php',$h); $log[]='home '.strlen($h);} else $log[]='home FAIL';
 require $root.'/wp-load.php';
 if(function_exists('do_action')) do_action('litespeed_purge_all');
 echo implode("\n",$log),"\n";
